@@ -18,7 +18,7 @@ app.listen(PORT, () => {
 
 const run = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URL)
+    await mongoose.connect(process.env.MONGODB_URI)
       .then(r => {
         console.log("Connected to " + r.connections[0].name);
       }).catch(e => {
