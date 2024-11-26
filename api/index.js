@@ -105,3 +105,37 @@ app.get('/works', (req, res) => {
       res.status(500).json(error);
     });
 })
+
+app.post('/works', (req, res) => {
+  const work = req.body;
+  Work.create(work, null)
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+})
+
+app.put('/works/:id', (req, res) => {
+  const id = req.params.id;
+  const work = req.body;
+  Work.updateOne({_id: id}, work)
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+})
+
+app.delete('/works/:id', (req, res) => {
+  const id = req.params.id;
+  Work.deleteOne({_id: id})
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+})
