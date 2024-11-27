@@ -4,6 +4,7 @@ const project = {
   description: String,
   image: String,
   link: String,
+  githubLink: String,
   subjects: [String]
 }
 
