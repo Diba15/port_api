@@ -9,6 +9,7 @@ require("dotenv").config();
 const work = require('../common/models/Work')
 const project = require('../common/models/Project')
 const student = require('../common/models/Student')
+const certificate = require('../common/models/Certificate')
 
 // Middleware
 app.use(express.json())
@@ -42,10 +43,13 @@ const workSchema = new mongoose.Schema(work)
 
 const projectSchema = new mongoose.Schema(project)
 
+const certificateSchema = new mongoose.Schema(certificate)
+
 // Mongoose Models
 const Student = mongoose.model('Student', studentSchema);
 const Work = mongoose.model('work', workSchema);
 const Project = mongoose.model('project', projectSchema);
+const Certificate = mongoose.model('certificate', certificateSchema);
 
 // CORS
 app.use(function(req, res, next) {
@@ -181,6 +185,51 @@ app.put('/projects/:id', (req, res) => {
 app.delete('/projects/:id', (req, res) => {
   const id = req.params.id;
   Project.deleteOne({_id: id})
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+})
+
+//Certificate Routes
+app.get('/certificates', (req, res) => {
+  Certificate.find(undefined, undefined, undefined)
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+})
+
+app.post('/certificates', (req, res) => {
+  const certificate = req.body;
+  Certificate.create(certificate, null)
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+})
+
+app.put('/certificates/:id', (req, res) => {
+  const id = req.params.id;
+  const certificate = req.body;
+  Certificate.updateOne({_id: id}, certificate)
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+})
+
+app.delete('/certificates/:id', (req, res) => {
+  const id = req.params.id;
+  Certificate.deleteOne({_id: id})
     .then((result) => {
       res.status(200).json(result);
     })
